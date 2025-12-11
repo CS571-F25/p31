@@ -1,23 +1,67 @@
-import { HashRouter, Route, Routes } from 'react-router';
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
-import Home from './pages/Home';
-import TodoPage from "./pages/TodoPage";
-import NotesPage from "./pages/NotesPage"
-import CalendarPage from "./pages/CalendarPage"
+import AuthRedirect from "./components/AuthRedirect";
 
-import './App.css'
+import Home from "./pages/Home";
+import TodoPage from "./pages/TodoPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Overdue from "./pages/Overdue";
+import Completed from "./pages/Completed";
+import PastEvents from "./pages/PastEvents";
 
 function App() {
-	return <HashRouter>
+	return (
+		<HashRouter>
 		<NavBar />
 		<Routes>
-			<Route path="/" element={<Home/>}></Route>
-			<Route path="/todo" element={<TodoPage/>}></Route>
-			<Route path="/notes" element={<NotesPage/>}></Route>
-			<Route path="/calendar" element={<CalendarPage/>}></Route>
+			<Route path="/login" element={<Login />} />
+			<Route path="/register" element={<Register />} />
+
+			<Route
+			path="/"
+			element={
+				<AuthRedirect>
+				<Home />
+				</AuthRedirect>
+			}
+			/>
+			<Route
+			path="/todo"
+			element={
+				<AuthRedirect>
+				<TodoPage />
+				</AuthRedirect>
+			}
+			/>
+			<Route
+			path="/overdue"
+			element={
+				<AuthRedirect>
+				<Overdue />
+				</AuthRedirect>
+			}
+			/>
+			<Route
+			path="/completed"
+			element={
+				<AuthRedirect>
+				<Completed />
+				</AuthRedirect>
+			}
+			/>
+			<Route
+			path="/pastevents"
+			element={
+				<AuthRedirect>
+				<PastEvents />
+				</AuthRedirect>
+			}
+			/>
 		</Routes>
-	</HashRouter>
+		</HashRouter>
+	);
 }
 
-export default App
+export default App;

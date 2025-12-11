@@ -1,41 +1,19 @@
-import { useState } from "react";
 import TodoItem from "./TodoItem";
-import { Button, Form } from "react-bootstrap";
 
-function TodoList() {
-    const [tasks, setTasks] = useState([]);
-    const [input, setInput] = useState("");
-
-    function addTask() {
-        if (input.trim() == "") return;
-        setTasks([...setTasks, input]);
-        setInput("");
-    }
-
-    function deleteTask(index) {
-        setTasks(tasks.filter((_, i) => i !== index));
-    }
-
+export default function TodoList({ tasks, setSelectedTask, setEditTask, setIsTaskModalOpen }) {
     return (
-        <div>
-            <Form.Group>
-                <Form.Control
-                    type="text"
-                    value={input}
-                    placeholder="Add a task..."
-                    onChange={(e) => setInput(e.target.value)} 
-                />
-            </Form.Group>
-
-            <Button className="mt-2" onClick={addTask}>Add</Button>
-
+        <div className="list-container">
             <ul>
-                {tasks.map((task, i) => (
-                    <TodoItem key={i} text={task} remove={() => deleteTask(i)} />
+                {tasks.map(task => (
+                    <TodoItem 
+                        key={task.id} 
+                        task={task} 
+                        setSelectedTask={setSelectedTask} 
+                        setEditTask={setEditTask} 
+                        setIsTaskModalOpen={setIsTaskModalOpen} 
+                    />
                 ))}
             </ul>
         </div>
-    )
+    );
 }
-
-export default TodoList
