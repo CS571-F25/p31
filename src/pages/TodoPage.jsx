@@ -54,11 +54,13 @@ export default function TodoPage() {
     const addTask = async () => {
         if (!newTask.title.trim() || !user) return;
 
+        const isNote = newTask.type === "Note"
+
         const { error } = await supabase.from("notes").insert([{
             title: newTask.title,
             type: newTask.type,
-            due_date: newTask.due_date,
-            time: newTask.time,
+            due_date: isNote ? null : newTask.due_date,
+            time: isNote ? null : newTask.time,
             description: newTask.description,
             completed: newTask.completed,
             user_id: user.id
